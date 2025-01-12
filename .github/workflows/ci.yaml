@@ -21,7 +21,10 @@ jobs:
           sudo apt-get install -y wget pv patch diffutils
       -
         name: Setup Rust Toolchain for GitHub CI
-        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1 
+        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1
+      -
+        name: Setup tectonic
+        uses: wtfjoke/setup-tectonic@v3
       -
         name: Read environment, download and decomparess tarball
         working-directory: ${{ env.BUNDLE_DIR }}
