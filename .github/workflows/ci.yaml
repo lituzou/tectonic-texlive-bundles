@@ -1,0 +1,36 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Clone app repo
+        uses: actions/checkout@v2
+      -
+        name: Read dotenv file
+        uses: xom9ikk/dotenv@v2.3.0
+      -
+        name: Install dependencies
+        run: |
+          sudo apt-get install -y wget pv patch diff
+      -
+        name: Setup Rust Toolchain for GitHub CI
+        uses: actions-rust-lang/setup-rust-toolchain@v1.10.1 
+      -
+        name: Read environment, download and decomparess tarball
+        working-directory: ${{ env.BUNDLE_DIR }}
+        run: |
+          echo "TARBALL_LINK: ${{ env.TARBALL_LINK }}"
+          wget ${{ env.TARBALL_LINK }}
+          xz -d *.tar.xz
+      -
+        name: Build bundle
+        working-directory: ./builder
+        run : |
+          cargo run -- --build-dir ../build "../${{ env.BUNDLE_DIR }}/bundle.toml
