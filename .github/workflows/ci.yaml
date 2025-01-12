@@ -27,7 +27,7 @@ jobs:
         working-directory: ${{ env.BUNDLE_DIR }}
         run: |
           echo "TARBALL_LINK: ${{ env.TARBALL_LINK }}"
-          wget ${{ env.TARBALL_LINK }}
+          wget -q ${{ env.TARBALL_LINK }}
           xz -d *.tar.xz
       -
         name: Build bundle
