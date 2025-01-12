@@ -51,6 +51,7 @@ impl TarBundleInput {
 }
 
 impl BundleInput for TarBundleInput {
+    #[allow(refining_impl_trait)]
     fn iter_files(&mut self) -> impl Iterator<Item = Result<(String, Box<dyn Read + '_>)>> + '_ {
         self.archive.entries().unwrap().filter_map(|x| {
             // TODO: error handling
