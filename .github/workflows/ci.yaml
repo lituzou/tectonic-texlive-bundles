@@ -28,14 +28,19 @@ jobs:
         run: |
           echo "TARBALL_LINK: ${{ env.TARBALL_LINK }}"
           wget -q ${{ env.TARBALL_LINK }}
-          xz -d *.tar.xz
+          xz -d ${{ env.TARBALL_NAME }}
       -
         name: Build bundle
         working-directory: ./builder
         run : |
-          cargo run -- --build-dir ../build "../${{ env.BUNDLE_DIR }}/bundle.toml
+          cargo run -- --build-dir ../build "../${{ env.BUNDLE_DIR }}/bundle.toml"
       -
         name: List build result
         working-directory: ./build
         run : |
           ls -lh
+      -
+        name: Test bundle
+        working-directory: ./test
+        run : |
+          ./test.sh ../build/${{ env.BUNDLE_NAME }} all
