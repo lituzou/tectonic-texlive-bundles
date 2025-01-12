@@ -34,3 +34,8 @@ jobs:
         working-directory: ./builder
         run : |
           cargo run -- --build-dir ../build "../${{ env.BUNDLE_DIR }}/bundle.toml
+      -
+        name: List build result
+        working-directory: ./build
+        run : |
+          ls -lh
